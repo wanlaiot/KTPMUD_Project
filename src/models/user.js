@@ -22,8 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     isActive: DataTypes.BOOLEAN,
     password: DataTypes.STRING,
     deleteAt: DataTypes.STRING,
-    createdAt: DataTypes.STRING,
-    updatedAt: DataTypes.STRING,
+     //createdAt: DataTypes.STRING,
+     //updatedAt: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'User',
