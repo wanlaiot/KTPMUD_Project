@@ -36,17 +36,37 @@ let userId=req.query.id;
 console.log(userId);
 if(userId){
     let userData=await CRUDService.getUserInforById(userId);
-    console.log("-----------------------");
-    console.log(userData);
-    console.log("-----------------------");
-     return res.send("User found");                              // co loi o day: userData never read
+    // console.log("-----------------------");
+    // console.log(userData);
+    // console.log("-----------------------");
+     return res.render('editCRUD.ejs',{
+        user:userData
+     });                              // co loi o day: userData never read
 }
 else
 {
     return res.send("User not found");
 }
 }
-//return res.send("Da vao route edit-user")};
+
+let putCRUD= async(req,res)=>{
+    let data=req.body;
+    let allUser=await CRUDService.updateUserData(data);
+  return res.render('displayCRUD.ejs',{
+    dataTable: allUser
+  })
+}
+let deleteCRUD=async(req,res)=>{
+    let id=req.query.id;
+    if(id){
+        await CRUDService.deleteUserById(id);
+        return res.send('Xoa thanh cong');
+    }
+    else{
+        return res.send('Khong tim thay user');
+    }
+    
+}
 //xuat cac ham ra khoi file nay
 module.exports= {
 getHomePage: getHomePage,
@@ -54,6 +74,6 @@ getCRUD:getCRUD,
 postCRUD:postCRUD,
 displayGetCRUD:displayGetCRUD,
 getEditCRUD:getEditCRUD,
-
-
+putCRUD:putCRUD,
+deleteCRUD:deleteCRUD,
 }
