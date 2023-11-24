@@ -4,11 +4,7 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Project extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+    
     static associate(models) {
       // define association here
     }
@@ -20,13 +16,14 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING,
     startTime: DataTypes.DATE,
     endTime: DataTypes.DATE,
-    password: DataTypes.STRING,
-    createAt: DataTypes.STRING,
-    updateAt: DataTypes.STRING,
+    //password: DataTypes.STRING,
+    //createdAt: DataTypes.STRING,
+    //updatedAt: DataTypes.STRING,
     deleteAt: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Project',
+    freezeTableName: true
   });
   return Project;
 };
