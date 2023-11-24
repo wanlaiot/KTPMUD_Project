@@ -26,7 +26,8 @@ let initWebRoutes = (app) => {
     router.get("/api/get-all-project",projectController.handleGetAllProject);
     router.post("/api/loginProject",projectController.handleLoginProject);
     router.post("/api/create-new-project",projectController.handleCreateNewProject);
-
+    router.put('/api/edit-project',projectController.handleEditProject);
+    router.delete('/api/delete-project',projectController.handleDeleteProject);
        
         
 

@@ -46,8 +46,29 @@ let handleLoginProject=async(req,res)=>{
        
     })
 }
+// api xoa nguoi dung
+let handleDeleteProject=async(req,res)=>{
+    if(!req.body.id){
+        return res.status(200).json({
+            errCode:1,
+            errMessage:'khong co id truyen vao'
+        })
+    }
+    let message=await projectService.deleteProject(req.body.id)
+    console.log(message);
+    return res.status(200).json(message);
+}
+// ham sua du lieu project
+let handleEditProject=async(req,res)=>{
+    let data=req.body;
+    let message=await projectService.updateProjectData(data);
+    return res.status(200).json(message);
+
+}
 module.exports={
     handleGetAllProject:handleGetAllProject,
     handleCreateNewProject:handleCreateNewProject,
     handleLoginProject:handleLoginProject,
+    handleDeleteProject:handleDeleteProject,
+    handleEditProject:handleEditProject
 }

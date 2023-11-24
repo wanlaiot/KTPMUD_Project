@@ -2,6 +2,13 @@ import db from "../models/index";
 let createNewProject=(data)=>{
     return new Promise(async(resolve,reject)=>{
         try{
+            let check=await checkNameProject(data.name);
+                if(check.errCode===0){
+                    resolve({
+                        errCode:1,
+                        message:"ten project da duoc su dung"
+                    })
+                }
             await db.Project.create({
                 name: data.name,
                 description: data.description,
@@ -87,8 +94,73 @@ let getAllProject=(projectId)=>{
         }
     });
 }
+// ham xoa project
+let deleteProject=(projectId)=>{
+    return new Promise(async(resolve,reject)=>{
+        let project= await db.Project.findOne({
+            where:{id:projectId},
+            //raw:false
+        })
+        if(!project){
+            resolve({
+                errCode:2,
+                errMessage:"Project khong ton tai"
+            })
+        }
+        await db.Project.destroy({
+            where:{id:projectId}
+        })
+        resolve({
+            errCode:0,
+            errMessage:"Project da duoc xoa"
+        })
+        
+    })
+}
+// ham sua du lieu project
+let updateProjectData=(data)=>{
+    return new Promise(async(resolve,reject)=>{
+        try{
+            if(!data.id){
+                resolve({
+                    errCode:2,
+                    errMessage:"khong co id truyen vao hehe"
+                })
+            }
+            let project=await db.Project.findOne({
+                where: {id: data.id},
+                raw: false
+            
+            })
+            if(project){
+                project.name=data.name;
+                project.description=data.description;
+                project.status=data.status;
+                project.startTime=data.startTime;
+                project.income=data.income;
+                await project.save();
+                resolve({
+                    errCode:0,
+                    errMessage:"Update thanh cong"
+                })
+            }else{
+                resolve({
+                    errCode:1,
+                    errMessage:"Project khong tim thay"
+                });
+            }
+          
+        }
+        catch(e){
+            reject(e);
+        }
+
+    })
+}
 module.exports={
     createNewProject:createNewProject,
     checkNameProject:checkNameProject,
-    getAllProject:getAllProject
+    getAllProject:getAllProject,
+    deleteProject:deleteProject,
+    updateProjectData:updateProjectData
 }

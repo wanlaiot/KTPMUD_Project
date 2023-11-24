@@ -150,6 +150,7 @@ let createNewUser=(data)=>{
 }
 let deleteUser=(userId)=>{
     return new Promise(async(resolve,reject)=>{
+        try{
         let user= await db.User.findOne({
             where:{id:userId},
             //raw:false
@@ -167,7 +168,10 @@ let deleteUser=(userId)=>{
             errCode:0,
             errMessage:"Tai khoan da duoc xoa"
         })
-
+    }
+    catch(e){
+        reject(e);
+    }
     })
 }
 let updateUserData=(data)=>{
@@ -176,7 +180,7 @@ let updateUserData=(data)=>{
             if(!data.id){
                 resolve({
                     errCode:2,
-                    errMessage:"khong co id truyen vao"
+                    errMessage:"khong co id truyen vao hehe"
                 })
             }
             let user=await db.User.findOne({
