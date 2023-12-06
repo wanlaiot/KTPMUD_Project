@@ -1,3 +1,4 @@
+
 'use strict';
 const {
   Model
@@ -7,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     
     static associate(models) {
       // define association here
+      
     }
   }
   JoinProject.init({

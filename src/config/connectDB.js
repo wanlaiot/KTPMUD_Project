@@ -7,8 +7,8 @@ const sequelize = new Sequelize('ktpmud', 'root', null, {
   // 'mysql', 'mariadb', 'postgres', 'mssql', 'sqlite', 'snowflake', 'db2' or 'ibmi'
   dialect: 'mysql',
   logging: false,
-  // define: {
-  //   timestamps: true,
+  //define: {
+     //timestamps: false,
   //   freezeTableName: true
   // }
 });

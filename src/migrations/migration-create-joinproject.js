@@ -10,12 +10,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idUser: {
-        type: Sequelize.INTEGER
-      },
-      idProject: {
-        type: Sequelize.INTEGER
-      },
+      // idUser: {
+      //   type: Sequelize.INTEGER
+      // },
+      // idProject: {
+      //   type: Sequelize.INTEGER
+      // },
     });
   },
   async down(queryInterface, Sequelize) {

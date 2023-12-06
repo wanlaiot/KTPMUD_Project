@@ -10,12 +10,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   JoinTeam.init({
-    idUser: DataTypes.INTEGER,
-    isTeam: DataTypes.INTEGER,
+    //idUser: DataTypes.INTEGER,    // asociation da tu tao 2 truong nay trong quan he manytomany giua user va project
+    //isTeam: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'JoinTeam',
-    freezeTableName: true
+    freezeTableName: true,
+    //timestamps: false
   });
   return JoinTeam;
 };

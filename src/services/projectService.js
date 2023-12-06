@@ -1,4 +1,5 @@
 import db from "../models/index";
+//import joinproject from "../models/joinproject";
 let createNewProject=(data)=>{
     return new Promise(async(resolve,reject)=>{
         try{
@@ -157,10 +158,143 @@ let updateProjectData=(data)=>{
 
     })
 }
+let joininProject=(data)=>{
+    return new Promise(async(resolve,reject)=>{
+        try{
+            if(!data.idofProject||!data.idofUser){
+                resolve({
+                    errCode:2,
+                    errMessage:"Nhap thieu thong tin "
+                })
+            }
+            let user=await db.User.findOne({
+                where: {id: data.idofUser},
+                raw: false
+            
+            })
+            let project=await db.Project.findOne({
+                where: {id: data.idofProject},
+                raw: false
+            
+            })
+            if(user&&project){
+                let check= checkjoinProject(data.idofProject,data.idofUser);
+                if(!check){
+                    resolve({
+                        errCode:5,
+                        errMessage:"User da co trong project tu truoc"
+                        
+                    })
+                }
+                else{
+                
+                await db.JoinProject.create({
+                    UserId:data.idofUser,
+                    ProjectId:data.idofProject
+                })
+                resolve({
+                    errCode:0,
+                    errMessage:"Them user vao project thanh cong"
+                })
+            }
+            }if(user&&!project){
+                resolve({
+                    errCode:1,
+                    errMessage:"Project khong tim thay"
+                });
+            }
+            if(!user&&project){
+                resolve({
+                    errCode:1,
+                    errMessage:"User khong tim thay"
+                });
+            }
+            else{
+                resolve({
+                    errCode:1,
+                    errMessage:"Project va User deu khong tim thay"
+                });
+            }
+           
+          
+        }
+        catch(e){
+            reject(e);
+        }
+
+    })
+}
+// ham xoa user trong project
+let deleteUserFromProject=(data)=>{
+    return new Promise(async(resolve,reject)=>{
+    try{
+        if(!data.id){
+            resolve({
+                errCode:2,
+                errMessage:"Nhap thieu thong tin "
+            })
+        }
+        let A= await db.JoinProject.findOne({
+            where:{id:data.id},
+            //raw:false
+        })
+        if(!A){
+            resolve({
+                errCode:1,
+                errMessage:"khong ton tai Id JoinProject"
+            })
+
+
+        }
+        await db.JoinProject.destroy({
+            where:{id:data.id}
+        })
+        resolve();
+    }
+    catch(e){
+        reject(e);
+    }
+})
+}
+let checkjoinProject=(idofUser,idofProject)=>{
+    return new Promise(async(resolve,reject)=>{
+        try{
+        
+            let idUser =await db.JoinProject.findOne({
+            
+                where: {
+                    UserId: idofUser
+                },
+                raw:true
+            })
+            let idProject =await db.JoinProject.findOne({
+            
+                where: {
+                    ProjectId: idofProject
+                },
+                raw:true
+            })
+            if(idUser&&idProject){
+            
+                resolve(true)
+               
+            }
+            else{
+                resolve(false)
+            }
+            
+        }
+        catch(e){
+            reject(e);
+        }
+       })
+}
 module.exports={
     createNewProject:createNewProject,
     checkNameProject:checkNameProject,
     getAllProject:getAllProject,
     deleteProject:deleteProject,
-    updateProjectData:updateProjectData
+    updateProjectData:updateProjectData,
+    joininProject:joininProject,
+    deleteUserFromProject:deleteUserFromProject
 }

@@ -65,10 +65,26 @@ let handleEditProject=async(req,res)=>{
     return res.status(200).json(message);
 
 }
+// ham tao mqh giua user va project
+let handleJoinProject=async(req,res)=>{
+   
+    let message=await projectService.joininProject(req.body)
+    console.log(message);
+    return res.status(200).json(message);
+}
+// ham xoa user trong project
+// let handleDeleteUserFromProject=async(req,res)=>{
+//     let message=await projectService.deleteUserFromProject(req.body)
+//     console.log(message);
+//     return res.status(200).json(message);
+// }
+    
 module.exports={
     handleGetAllProject:handleGetAllProject,
     handleCreateNewProject:handleCreateNewProject,
     handleLoginProject:handleLoginProject,
     handleDeleteProject:handleDeleteProject,
-    handleEditProject:handleEditProject
+    handleEditProject:handleEditProject,
+    handleJoinProject:handleJoinProject,
+    //handleDeleteUserFromProject:handleDeleteUserFromProject
 }
